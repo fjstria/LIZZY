@@ -2,9 +2,9 @@
 ## Testing
 Before running the server the file must have execute permissions – enter `chmod +x server.out`.
 
-`./server.out --port=<server port> [--debug]` runs the server.
+`./server.out --port=<server_port> [--debug]` runs the server.
 
-To start the client program, enter `python3 client.py --id=<name> --port=<client port> --server=<server ip:port>`.
+To start the client program, enter `python3 client.py --id=<client_name> --port=<client_port> --server=<server_ip:server_port>`.
 
 ## References
 Command Line Argument Parsing:

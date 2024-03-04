@@ -4,9 +4,9 @@
 import socket, sys, argparse
 
 # CLIENT FINITE STATE MACHINE ---------------------------------------
-def INITIALIZE(name, port):
-  serverName = name
-  serverPort = port
+def INITIALIZE(sName, sPort):
+  serverName = sName
+  serverPort = sPort
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   clientSocket.connect(serverName, serverPort)
 # end INITIALIZE()
@@ -33,11 +33,11 @@ def main():
     parser.add_argument("--server", action='store') 
     args = parser.parse_args()
     clientName = args.id
-    serverPort = args.port
-    serverName = args.server
-    INITIALIZE()
+    clientPort = args.port
+    serverName, serverPort = (args.server).split(":")
+    INITIALIZE(serverName, serverPort)
   except:
-    pass
+    print("Error: Argument parsing failed. Client was not initialized.")
 # end main()
 
 if __name__ == "__main__":
