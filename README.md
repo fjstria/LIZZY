@@ -8,7 +8,7 @@ To start the client program, enter `python3 client.py --id=<name> --port=<client
 
 ## References
 Command Line Argument Parsing:
-* https://www.geeksforgeeks.org/command-line-arguments-in-python/
+* https://docs.python.org/3.11/library/argparse.html
 
 Exception Handling:
 * https://www.programiz.com/python-programming/exception-handling
