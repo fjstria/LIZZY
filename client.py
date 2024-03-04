@@ -4,11 +4,30 @@
 import socket, sys, argparse
 
 # CLIENT FINITE STATE MACHINE ---------------------------------------
-def INITIALIZE(sName, sPort):
-  serverName = sName
-  serverPort = sPort
+def INITIALIZE():
+  """
+  Initializes the client program.
+  """
+  # get command line options
+  initializeParser = argparse.ArgumentParser()
+  initializeParser.add_argument("--id", action='store') 
+  initializeParser.add_argument("--port", action='store') 
+  initializeParser.add_argument("--server", action='store') 
+  args = initializeParser.parse_args()
+
+  # assign options to variables
+  clientName = args.id
+  clientPort = args.port
+  serverIP, serverPort = (args.server).split(":")
+
+  # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  clientSocket.connect(serverName, serverPort)
+
+  try:
+    clientSocket.connect(serverIP, serverPort)
+  except:
+    print("Error: Connection to server failed.")
+    TERMINATE(1)
 # end INITIALIZE()
 
 def WAIT():
@@ -19,25 +38,18 @@ def CHAT():
   pass
 # end CHAT()
   
-def TERMINATE():
-  pass
+def TERMINATE(exitCode):
+  """
+  Terminates the client program.
+  """
+  clientSocket.close()
+  sys.exit(exitCode)
 # end TERMINATE()
 # -------------------------------------------------------------------
 
 def main():
-  try:
-    # get options from command line input
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--id", action='store') 
-    parser.add_argument("--port", action='store') 
-    parser.add_argument("--server", action='store') 
-    args = parser.parse_args()
-    clientName = args.id
-    clientPort = args.port
-    serverName, serverPort = (args.server).split(":")
-    INITIALIZE(serverName, serverPort)
-  except:
-    print("Error: Argument parsing failed. Client was not initialized.")
+  global clientSocket
+  INITIALIZE()
 # end main()
 
 if __name__ == "__main__":
