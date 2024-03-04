@@ -1,4 +1,8 @@
-# Testing
+# Chat App
+## Dependencies
+* `python-statemachine`
+
+## Testing
 Before running the server the file must have execute permissions – enter `chmod +x server.out`.
 
 `./server.out --port=<server port> [--debug]` runs the server.
