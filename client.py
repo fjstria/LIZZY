@@ -45,6 +45,9 @@ def INITIALIZE():
                 except:
                     print("Error: Invalid REGACK.", file=sys.stderr)
                     TERMINATE(1)
+                clientSocket.close()  # close the socket after registration
+                clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
+                clientSocket.connect((serverIP, int(serverPort))) 
             elif userInput == "/bridge":
                 bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
                 clientSocket.send(bridgeRequest.encode())
