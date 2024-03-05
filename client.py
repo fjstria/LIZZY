@@ -39,7 +39,6 @@ def INITIALIZE():
     elif (userInput == "/bridge"):
       bridgeRequest = "BRIDGE\n\rclientID: {}\n\rBRIDGE\n\r".format(clientName)
       clientSocket.send(bridgeRequest.encode())
-      pass
     else:
       print("Error: Invalid argument.")
     
