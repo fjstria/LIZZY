@@ -54,7 +54,7 @@ def INITIALIZE():
             clientSocket.send(bridgeRequest.encode())
             bridgeData = (clientSocket.recv(1024)).decode()
             print("Response from server:", bridgeData)  # end point for part 1
-            if bridgeData == "BRIDGEACK\r\nclientID: \r\nIP: \r\nPort: \r\n":
+            if not bridgeData.strip():
                 WAIT()
             else:
                 CHAT()
@@ -96,3 +96,4 @@ def main():
 if __name__ == "__main__":
   main()
 # end if
+  
