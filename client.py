@@ -53,12 +53,9 @@ def INITIALIZE():
             bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
             clientSocket.send(bridgeRequest.encode())
             bridgeData = (clientSocket.recv(1024)).decode()
-            print("Response from server:", bridgeData)  # end point for part 1
-            if not bridgeData.strip():
-                WAIT()
-            else:
-                CHAT()
-            # end if
+            print("Response from server:\n", bridgeData)
+            TERMINATE()
+            # END OF PART 1
         # end if
     # end while
   except KeyboardInterrupt:
@@ -67,7 +64,7 @@ def INITIALIZE():
     print("Error:", e, file=sys.stderr)
     TERMINATE(1)
   # end try-except
-  # end INITIALIZE()
+# end INITIALIZE()
 
 def WAIT():
   print("Entered WAIT State.")
