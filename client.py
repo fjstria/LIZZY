@@ -24,7 +24,7 @@ def INITIALIZE():
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   clientIP = '127.0.0.1'
   try:
-    clientSocket.connect(serverIP, serverPort)
+    clientSocket.connect((serverIP, int(serverPort)))
     print("{} running on {}".format(clientName, clientIP))
   except:
     print("Error: Connection failed.", file=sys.stderr)
