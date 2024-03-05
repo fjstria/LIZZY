@@ -9,11 +9,11 @@ def INITIALIZE():
   Initializes the client program.
   """
   # get command line options
-  initializeParser = argparse.ArgumentParser()
-  initializeParser.add_argument("--id", action='store') 
-  initializeParser.add_argument("--port", action='store') 
-  initializeParser.add_argument("--server", action='store') 
-  args = initializeParser.parse_args()
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--id", action='store') 
+  parser.add_argument("--port", action='store') 
+  parser.add_argument("--server", action='store') 
+  args = parser.parse_args()
 
   # assign options to variables
   clientName = args.id
@@ -33,9 +33,8 @@ def INITIALIZE():
   while (True):
     userInput = input(">")
     if (userInput == "/register"):
-      message = "REGISTER\n\rclientID: {}\n\rIP: {}\n\rPort: {}\n\r\n\r".format(clientName, clientIP, clientPort)
-      print(message)
-      socket.send(message)
+      registerRequest = "REGISTER\n\rclientID: {}\n\rIP: {}\n\rPort: {}\n\r\n\r".format(clientName, clientIP, clientPort)
+      clientSocket.send(registerRequest.encode())
     elif (userInput == "/bridge"):
       bridgeRequest = "BRIDGE\n\rclientID: {}\n\rBRIDGE\n\r".format(clientName)
       clientSocket.send(bridgeRequest.encode())
