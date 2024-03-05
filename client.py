@@ -40,6 +40,8 @@ def INITIALIZE():
       clientSocket.send(bridgeRequest.encode())
       response = clientSocket.recv(1024).decode()
       print("Response from server:", response)
+    elif(userInput == "/id"):
+      print("User ID:", clientName)
     else:
       print("Error: Invalid argument.")
     
