@@ -22,8 +22,10 @@ def INITIALIZE():
 
   # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  clientIP = socket.gethostbyname(clientName)
   try:
     clientSocket.connect(serverIP, serverPort)
+    print("{} running on {}".format(clientName, clientIP))
   except:
     print("Error: Connection to server failed.")
     TERMINATE(1)
@@ -31,9 +33,13 @@ def INITIALIZE():
   while (True):
     userInput = input(">")
     if (userInput == "/register"):
-      pass
+      message = "REGISTER\n\rclientID: {}\n\rIP: {}\n\rPort: {}\n\r\n\r".format(clientName, clientIP, clientPort)
+      print(message)
+      socket.send(message)
     elif (userInput == "/bridge"):
       pass
+    else:
+      print("Error: Invalid argument.")
     
 # end INITIALIZE()
 
@@ -55,7 +61,7 @@ def TERMINATE(exitCode):
 # -------------------------------------------------------------------
 
 def main():
-  global clientSocket
+  global clientSocket, clientName, clientIP, clientPort, serverIP, serverPort
   INITIALIZE()
 # end main()
 
