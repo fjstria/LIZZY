@@ -22,12 +22,19 @@ def INITIALIZE():
 
   # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
   try:
     clientSocket.connect(serverIP, serverPort)
   except:
     print("Error: Connection to server failed.")
     TERMINATE(1)
+
+  while (True):
+    userInput = input(">")
+    if (userInput == "/register"):
+      pass
+    elif (userInput == "/bridge"):
+      pass
+    
 # end INITIALIZE()
 
 def WAIT():
