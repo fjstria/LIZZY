@@ -37,6 +37,8 @@ def INITIALIZE():
       print(message)
       socket.send(message)
     elif (userInput == "/bridge"):
+      bridge_request = "BRIDGE\n\rclientID: {}\n\rBRIDGE\n\r".format(clientName)
+      clientSocket.send(bridge_request.encode())
       pass
     else:
       print("Error: Invalid argument.")
@@ -68,4 +70,3 @@ def main():
 if __name__ == "__main__":
   main()
 # end if
-  
