@@ -22,41 +22,54 @@ def INITIALIZE():
 
   # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  clientIP = socket.gethostbyname(clientName)
+  clientIP = socket.gethostbyname(socket.gethostname)
   try:
     clientSocket.connect(serverIP, serverPort)
     print("{} running on {}".format(clientName, clientIP))
   except:
-    print("Error: Connection to server failed.")
-    TERMINATE(1)
+    print("Error: Connection failed.", file=sys.stderr)
+    TERMINATE(1)  # exit code for error
+  # end try-except
 
+  # get client input for next action
   while (True):
     userInput = input(">")
     if(userInput == "/id"):
       print("User ID:", clientName)
     elif (userInput == "/register"):
-      registerRequest = "REGISTER\n\rclientID: {}\n\rIP: {}\n\rPort: {}\n\r\n\r".format(clientName, clientIP, clientPort)
+      registerRequest = "REGISTER\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort)
       clientSocket.send(registerRequest.encode())
-      clientData = (clientSocket.recv(1024)).decode
-      print(clientData.decode)
+      clientData = (clientSocket.recv(1024)).decode()
+      try:
+        assert clientData == ("REGACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort))
+      except:
+        print("Error: Invalid REGACK.", file=sys.stderr)
+        TERMINATE(1)
     elif (userInput == "/bridge"):
-      bridgeRequest = "BRIDGE\n\rclientID: {}\n\rBRIDGE\n\r".format(clientName)
+      bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
       clientSocket.send(bridgeRequest.encode())
       bridgeData = (clientSocket.recv(1024)).decode()
-      print("Response from server:", bridgeData)
+      print("Response from server:", bridgeData)  # end point for part 1
+      if (bridgeData == ""):
+        WAIT()
+      else:
+        CHAT()
     elif (KeyboardInterrupt):
-      TERMINATE(130)
+      TERMINATE(130)  # exit code for ctrl+c
     else:
-      print("Error: Invalid argument.")
-    
+      print("Error: Invalid argument.", file=sys.stderr)
+    # end if
+  # end while
 # end INITIALIZE()
 
 def WAIT():
-  pass
+  print("Entered WAIT State.")
+  TERMINATE(0)  # exit code for success
 # end WAIT()
 
 def CHAT():
-  pass
+  print("Entered CHAT State.")
+  TERMINATE(0)
 # end CHAT()
   
 def TERMINATE(exitCode):
