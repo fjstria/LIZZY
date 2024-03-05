@@ -35,15 +35,16 @@ def INITIALIZE():
     if (userInput == "/register"):
       registerRequest = "REGISTER\n\rclientID: {}\n\rIP: {}\n\rPort: {}\n\r\n\r".format(clientName, clientIP, clientPort)
       clientSocket.send(registerRequest.encode())
+      clientData = socket.recv(1024)
+      print(clientData.decode)
     elif (userInput == "/bridge"):
       bridgeRequest = "BRIDGE\n\rclientID: {}\n\rBRIDGE\n\r".format(clientName)
       clientSocket.send(bridgeRequest.encode())
       response = clientSocket.recv(1024).decode()
       print("Response from server:", response)
-    elif(userInput == "/id"):
-      print("User ID:", clientName)
     else:
       print("Error: Invalid argument.")
+  TERMINATE()
     
 # end INITIALIZE()
 
