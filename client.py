@@ -1,6 +1,3 @@
-# client.py
-# Implementation of the client-side behavior of the chat app.
-
 import socket, sys, argparse
 
 # CLIENT FINITE STATE MACHINE ---------------------------------------
@@ -50,7 +47,7 @@ def INITIALIZE():
                 clientSocket.send(bridgeRequest.encode())
                 bridgeData = (clientSocket.recv(1024)).decode()
                 print("Response from server:", bridgeData)  # end point for part 1
-                if (bridgeData == ""):
+                if bridgeData == "":
                     WAIT()
                 else:
                     CHAT()
@@ -63,7 +60,8 @@ def INITIALIZE():
 # end INITIALIZE()
 
 def WAIT():
-    print("Entered WAIT State.")
+    print("Waiting for bridge acknowledgment from server...")
+    # Additional handling for the wait state can be added here
     TERMINATE(0)  # exit code for success
 
 def CHAT():
