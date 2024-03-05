@@ -83,6 +83,7 @@ def TERMINATE(exitCode):
 # -------------------------------------------------------------------
 
 def main():
+    global clientSocket, clientName, clientIP, clientPort, serverIP, serverPort
     INITIALIZE()
 
 if __name__ == "__main__":
