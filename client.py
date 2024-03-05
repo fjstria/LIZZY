@@ -31,7 +31,7 @@ def INITIALIZE():
     TERMINATE(1)  # exit code for error
   # end try-except
 
-  # get client input for next action
+  # get client input for next action!
   while (True):
     userInput = input(">")
     if(userInput == "/id"):
