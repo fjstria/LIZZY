@@ -22,7 +22,7 @@ def INITIALIZE():
 
   # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  clientIP = socket.gethostbyname(clientName)
+  clientIP = clientSocket.gethostbyname(clientName)
   try:
     clientSocket.connect(serverIP, serverPort)
     print("{} running on {}".format(clientName, clientIP))
@@ -31,7 +31,7 @@ def INITIALIZE():
     TERMINATE(1)  # exit code for error
   # end try-except
 
-  # get client input for next action
+  # get client input for next action!
   while (True):
     userInput = input(">")
     if(userInput == "/id"):
