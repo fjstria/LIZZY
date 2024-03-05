@@ -22,7 +22,7 @@ def INITIALIZE():
 
   # attempt server connection
   clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  clientIP = clientSocket.gethostbyname(clientName)
+  clientIP = '127.0.0.1'
   try:
     clientSocket.connect(serverIP, serverPort)
     print("{} running on {}".format(clientName, clientIP))
