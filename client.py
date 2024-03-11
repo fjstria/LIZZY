@@ -13,6 +13,7 @@ def main():
         Initializes client-server connection.
         """
         # get client input for next action
+        print("*** STATE: INITIALIZE ***")
         try:
             while True:
                 userInput = input(">")
@@ -62,7 +63,7 @@ def main():
         """
         Pauses client input while awaiting second client connection.
         """
-        print("Entered WAIT State.")
+        print("*** STATE: WAIT ***")
         try:
             clientSocket.listen()   # stop-and-wait function, returns when connection received
             CHAT()
@@ -80,7 +81,7 @@ def main():
         """
         Operates chat activity between both clients. 
         """
-        print("Entered CHAT State.")
+        print("*** STATE: CHAT ***")
         try:
             while True:
                 message = input("Enter message: ")
@@ -101,6 +102,7 @@ def main():
         """
         Terminates the client program.
         """
+        print("*** STATE: TERMINATE ***")
         clientSocket.close()
         sys.exit(0)
     # end TERMINATE()
