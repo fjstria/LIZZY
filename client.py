@@ -12,7 +12,7 @@ def main():
             print("{} running on {}".format(clientName, clientIP))
         except:
             print("Error: Connection failed.", file=sys.stderr)
-            TERMINATE(1)  # exit code for error
+            TERMINATE()  # exit code for error
         # end try-except
 
         # get client input for next action!
@@ -26,12 +26,12 @@ def main():
                 elif userInput == "/register":
                     registerRequest = "REGISTER\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort)
                     clientSocket.send(registerRequest.encode())
-                    clientData = (clientSocket.recv(1024)).decode()
+                    clientData = (clientSocket.recv(4096)).decode()
                     try:
                         assert clientData == ("REGACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort))
                     except:
                         print("Error: Invalid REGACK.", file=sys.stderr)
-                        TERMINATE(1)
+                        TERMINATE()
                     clientSocket.close()  # close the socket after registration
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
                     clientSocket.connect((serverIP, int(serverPort))) 
@@ -39,10 +39,8 @@ def main():
                 elif userInput == "/bridge":
                     bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
                     clientSocket.send(bridgeRequest.encode())
-                    bridgeData = (clientSocket.recv(1024)).decode()
+                    bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:\n", bridgeData)
-                    TERMINATE()
-                    # END OF PART 1
                 # chat
                 elif userInput == "/chat":
                     pass
@@ -54,30 +52,28 @@ def main():
                     pass  
                 # end if
             # end while
-        except KeyboardInterrupt:
-            TERMINATE(130)  # exit code for ctrl+c
-        except Exception as e:
-            print("Error:", e, file=sys.stderr)
-            TERMINATE(1)
+        except:
+            print("Error: Connection failed.", file=sys.stderr)
+            TERMINATE()
         # end try-except
     # end INITIALIZE()
 
     def WAIT():
         print("Entered WAIT State.")
-        TERMINATE(0)  # exit code for success
+        TERMINATE()
     # end WAIT()
 
     def CHAT():
         print("Entered CHAT State.")
-        TERMINATE(0)
+        TERMINATE()
     # end CHAT()
 
-    def TERMINATE(exitCode):
+    def TERMINATE():
         """
         Terminates the client program.
         """
         clientSocket.close()
-        sys.exit(exitCode)
+        sys.exit()
     # end TERMINATE()
     
     # get command line options
