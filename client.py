@@ -71,16 +71,23 @@ def main():
         TERMINATE()
     # end WAIT()
     def CHAT():
-        global clientSocket
-        print("Entered CHAT State.")
-        try:
+      global clientSocket
+      print("Entered CHAT State.")
+      try:
           while True:
               message = input("Enter message: ")
-              clientSocket.send(message.encode())
-        except KeyboardInterrupt:
-          if message == "/quit":
-              clientSocket.send(message.encode())
-              TERMINATE()
+              if message == "/quit":
+                  clientSocket.send(message.encode())
+                  break  
+              else:
+                  clientSocket.send(message.encode())
+      except KeyboardInterrupt:
+          pass
+      except Exception as e:
+          print("Error:", e, file=sys.stderr)
+      finally:
+          TERMINATE()
+
 
     def TERMINATE():
         """
