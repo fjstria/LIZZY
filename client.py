@@ -4,7 +4,9 @@
 import socket, sys, argparse
 
 def main():
+    global clientSocket
     def INITIALIZE():
+        global clientSocket
         # attempt server connection
         try:
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -64,10 +66,12 @@ def main():
     # end INITIALIZE()
             
     def WAIT():
+        global clientSocket
         print("Entered WAIT State.")
         TERMINATE()
     # end WAIT()
     def CHAT():
+        global clientSocket
         print("Entered CHAT State.")
         try:
           while True:
@@ -85,6 +89,7 @@ def main():
         """
         Terminates the client program.
         """
+        global clientSocket
         clientSocket.close()
         sys.exit()
     # end TERMINATE()
