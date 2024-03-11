@@ -4,19 +4,14 @@
 import socket, sys, argparse
 
 def main():
-    global clientSocket
+    """
+    Handles the initialization, running behavior, and termination of the client.
+    """
     def INITIALIZE():
         global clientSocket
-        # attempt server connection
-        try:
-            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            clientSocket.connect((serverIP, int(serverPort)))
-            print("{} running on {}".format(clientName, clientIP))
-        except:
-            print("Error: Connection failed.", file=sys.stderr)
-            TERMINATE()  # exit code for error
-        # end try-except
-
+        """
+        Initializes client-server connection.
+        """
         # get client input for next action
         try:
             while True:
@@ -43,7 +38,7 @@ def main():
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:\n", bridgeData)
-                    if bridgeData == "BRIDGEACK\r\nclientID: \r\nIP: \r\n Port: \r\n\r\n":
+                    if bridgeData == " BRIDGEACK\r\nclientID: \r\nIP: \r\n Port: \r\n\r\n":
                         WAIT()
                         return
                     else:
@@ -59,6 +54,9 @@ def main():
                     pass  
                 # end if
             # end while
+        except KeyboardInterrupt:
+            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            TERMINATE()
         except:
             print("Error: Connection failed.", file=sys.stderr)
             TERMINATE()
@@ -67,53 +65,79 @@ def main():
             
     def WAIT():
         global clientSocket
+        """
+        Pauses client input while awaiting second client connection.
+        """
         print("Entered WAIT State.")
-        TERMINATE()
+        try:
+            while True:
+                # TODO TODO TODO TODO TODO
+                pass
+        except KeyboardInterrupt:
+            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            TERMINATE()
+        except:
+            print("Error: Connection failed.", file=sys.stderr)
+            TERMINATE()
     # end WAIT()
+    
     def CHAT():
-      global clientSocket
-      print("Entered CHAT State.")
-      try:
-          while True:
-              message = input("Enter message: ")
-              if message == "/quit":
-                  clientSocket.send(message.encode())
-                  break  
-              else:
-                  clientSocket.send(message.encode())
-      except KeyboardInterrupt:
-          pass
-      except Exception as e:
-          print("Error:", e, file=sys.stderr)
-      finally:
-          TERMINATE()
-
+        global clientSocket
+        """
+        Operates chat activity between both clients. 
+        """
+        print("Entered CHAT State.")
+        try:
+            while True:
+                message = input("Enter message: ")
+                if message == "/quit":
+                    clientSocket.send(message.encode())
+                    break  
+                else:
+                    clientSocket.send(message.encode())
+        except KeyboardInterrupt:
+            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            TERMINATE()
+        except:
+            print("Error: Connection failed.", file=sys.stderr)
+            TERMINATE()
 
     def TERMINATE():
+        global clientSocket
         """
         Terminates the client program.
         """
-        global clientSocket
         clientSocket.close()
-        sys.exit()
+        sys.exit(0)
     # end TERMINATE()
-    
-    # get command line options
+
+    # read client options
     parser = argparse.ArgumentParser()
     parser.add_argument("--id", action='store') 
     parser.add_argument("--port", action='store') 
     parser.add_argument("--server", action='store') 
     args = parser.parse_args()
 
-    # assign options to variables
+    # save client and server details
     clientName = args.id
     clientPort = args.port
     serverIP, serverPort = (args.server).split(":")
     clientIP = '127.0.0.1'
-    global clientSocket
 
-    INITIALIZE()
- # end main()
+    # attempt client-server connection
+    try:
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect((serverIP, int(serverPort)))
+        print("{} running on {}".format(clientName, clientIP))
+        INITIALIZE()
+    except KeyboardInterrupt:
+        print("Error: Client interrupt caught. Ending program.", file=sys.stderr)
+        sys.exit(0)
+    except:
+        print("Error: Connection not established. Ending program.", file=sys.stderr)
+        sys.exit(1)
+    # end try-except
+# end main()
 
 if __name__ == "__main__":
     main()
