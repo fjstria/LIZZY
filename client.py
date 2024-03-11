@@ -27,7 +27,7 @@ def main():
                     try:
                         assert clientData == ("REGACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort))
                     except:
-                        print("Error: Invalid REGACK.", file=sys.stderr)
+                        print("Error: Invalid REGACK.\n", file=sys.stderr)
                         TERMINATE()
                     clientSocket.close()  # close the socket after registration
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
@@ -38,27 +38,21 @@ def main():
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:\n", bridgeData)
-                    if bridgeData == " BRIDGEACK\r\nclientID: \r\nIP: \r\n Port: \r\n\r\n":
-                        WAIT()
-                        return
-                    else:
-                        print("Entered CHAT State.")
-                        CHAT(clientSocket)
-                        return
-                    # end if
+                    WAIT()
+                    return
                 # quit
                 elif userInput == "/quit":
                     TERMINATE()
                 # unknown command
                 else:
-                    pass  
+                    print("Error: Unknown command.\n")  
                 # end if
             # end while
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except:
-            print("Error: Connection failed.", file=sys.stderr)
+            print("Error: Connection failed.\n", file=sys.stderr)
             TERMINATE()
         # end try-except
     # end INITIALIZE()
@@ -74,10 +68,10 @@ def main():
             CHAT()
             return
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except:
-            print("Error: Connection failed.", file=sys.stderr)
+            print("Error: Connection failed.\n", file=sys.stderr)
             TERMINATE()
     # end WAIT()
     
@@ -96,10 +90,10 @@ def main():
                 else:
                     clientSocket.send(message.encode())
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
+            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except:
-            print("Error: Connection failed.", file=sys.stderr)
+            print("Error: Connection failed.\n", file=sys.stderr)
             TERMINATE()
 
     def TERMINATE():
@@ -131,10 +125,10 @@ def main():
         print("{} running on {}".format(clientName, clientIP))
         INITIALIZE()
     except KeyboardInterrupt:
-        print("Error: Client interrupt caught. Ending program.", file=sys.stderr)
+        print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
         sys.exit(0)
     except:
-        print("Error: Connection not established. Ending program.", file=sys.stderr)
+        print("Error: Connection not established. Ending program.\n", file=sys.stderr)
         sys.exit(1)
     # end try-except
 # end main()
