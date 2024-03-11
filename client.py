@@ -70,9 +70,9 @@ def main():
         """
         print("Entered WAIT State.")
         try:
-            while True:
-                # TODO TODO TODO TODO TODO
-                pass
+            clientSocket.listen()   # stop-and-wait function, returns when connection received
+            CHAT()
+            return
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.", file=sys.stderr)
             TERMINATE()
