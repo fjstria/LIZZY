@@ -15,7 +15,7 @@ def main():
             TERMINATE()  # exit code for error
         # end try-except
 
-        # get client input for next action!
+        # get client input for next action
         try:
             while True:
                 userInput = input(">")
@@ -41,12 +41,19 @@ def main():
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:\n", bridgeData)
+                    if bridgeData == "BRIDGEACK\r\nclientID: \r\nIP: \r\n Port: \r\n\r\n":
+                        WAIT()
+                        return
+                    else:
+                        CHAT()
+                        return
+                    # end if
                 # chat
                 elif userInput == "/chat":
                     pass
                 # quit
                 elif userInput == "/quit":
-                    pass
+                    TERMINATE()
                 # unknown command
                 else:
                     pass  
