@@ -49,19 +49,6 @@ def main():
                         CHAT(clientSocket)
                         return
                     # end if
-                # chat
-                elif userInput == "/chat":
-                    print("Entered CHAT State.")
-                    try:
-                      while True:
-                          message = input("Enter message: ")
-                          if message == "/quit":
-                              break
-                          clientSocket.send(message.encode())
-                    except KeyboardInterrupt:
-                        pass
-                    finally:
-                      pass
                 # quit
                 elif userInput == "/quit":
                     TERMINATE()
@@ -75,6 +62,24 @@ def main():
             TERMINATE()
         # end try-except
     # end INITIALIZE()
+            
+    def WAIT():
+        print("Entered WAIT State.")
+        TERMINATE()
+    # end WAIT()
+    def CHAT():
+        print("Entered CHAT State.")
+        try:
+          while True:
+              message = input("Enter message: ")
+              if message == "/quit":
+                  break
+              clientSocket.send(message.encode())
+        except KeyboardInterrupt:
+            pass
+        finally:
+          pass
+        TERMINATE()
 
     def TERMINATE():
         """
