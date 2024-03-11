@@ -77,13 +77,14 @@ def main():
           while True:
               message = input("Enter message: ")
               if message == "/quit":
+                  clientSocket.send(message.encode())
                   break
-              clientSocket.send(message.encode())
+              else:
+                clientSocket.send(message.encode())
         except KeyboardInterrupt:
             pass
         finally:
-          pass
-        TERMINATE()
+            TERMINATE()
 
     def TERMINATE():
         """
