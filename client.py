@@ -89,7 +89,7 @@ def main():
             clientSocket.close()
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Create a new socket for chat
             clientSocket.connect(address)  # Connect to the address of the accepted client
-            CHAT(clientSocket)
+            CHAT()
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
