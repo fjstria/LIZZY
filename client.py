@@ -17,7 +17,6 @@ def main():
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.connect((serverIP, int(serverPort)))
             print("{} running on {}".format(clientName, clientIP))
-            #clientSocket.send("READY_FOR_CHAT".encode())
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
             sys.exit(0)
@@ -52,7 +51,7 @@ def main():
                     bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
-                    print("Response from server:\n", bridgeData)
+                    print("Response from server:",bridgeData)
                     WAIT()
                     return
                 # quit
