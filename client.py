@@ -12,6 +12,20 @@ def main():
         """
         Initializes client-server connection.
         """
+            # attempt client-server connection
+        try:
+            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            clientSocket.connect((serverIP, int(serverPort)))
+            print("{} running on {}".format(clientName, clientIP))
+            INITIALIZE()
+        except KeyboardInterrupt:
+            print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
+            sys.exit(0)
+        except:
+            print("Error: Connection not established. Ending program.\n", file=sys.stderr)
+            sys.exit(1)
+        # end try-except
+
         # get client input for next action
         print("*** STATE: INITIALIZE ***")
         try:
@@ -120,19 +134,7 @@ def main():
     serverIP, serverPort = (args.server).split(":")
     clientIP = '127.0.0.1'
 
-    # attempt client-server connection
-    try:
-        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        clientSocket.connect((serverIP, int(serverPort)))
-        print("{} running on {}".format(clientName, clientIP))
-        INITIALIZE()
-    except KeyboardInterrupt:
-        print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
-        sys.exit(0)
-    except:
-        print("Error: Connection not established. Ending program.\n", file=sys.stderr)
-        sys.exit(1)
-    # end try-except
+
 # end main()
 
 if __name__ == "__main__":
