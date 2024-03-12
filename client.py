@@ -53,16 +53,16 @@ def main():
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:",bridgeData)
-                    if bridgeData == "BRIDGEACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n".format('', '', ''):
+                    if "BRIDGEACK\r\nclientID: \r\nIP: \r\nPort: \r\n" in bridgeData:
                         WAIT()
                     #end if
-                #chat
-                        
+                #chat      
                 elif userInput == "/chat":
                     # TODO: somehow parse bridgeData string to get peer's info
                     clientSocket.close()
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
-                    clientSocket.connect((serverIP, int(serverPort))) 
+                    clientSocket.connect((serverIP, int(serverPort)))
+                    CHAT()
                 # quit
                 elif userInput == "/quit":
                     TERMINATE()
