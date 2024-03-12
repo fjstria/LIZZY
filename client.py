@@ -57,11 +57,6 @@ def main():
                     #end if
                 #chat      
                 elif userInput == "/chat":
-                    peerData = bridgeData.split()
-                    print(peerData)
-                    clientSocket.close()
-                    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
-                    clientSocket.connect(('127.0.0.1', int(serverPort)))
                     CHAT()
                 # quit
                 elif userInput == "/quit":
@@ -109,13 +104,16 @@ def main():
         Operates chat activity between both clients. 
         """
         try:
-            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            clientSocket.bind((clientIP, int(clientPort)))
-            clientSocket.listen()   # stop-and-wait function, returns when connection received
-            clientSocket.accept()
+            #clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            #clientSocket.bind((clientIP, int(clientPort)))
+            #clientSocket.listen()   # stop-and-wait function, returns when connection received
+            #clientSocket.accept()
             while True:
                 userInput = input(">")
                 chatMessage = "CHAT\r\nclientID: {}\r\nMessage: {}\r\n\r\n".format(clientName, userInput)
+                clientSocket.send(chatMessage.encode())
+                chatData = (clientSocket.recv(4096)).decode()
+                print(":", chatData)
             #print("Connection established with", address)
             #clientSocket.close()
         except KeyboardInterrupt:
