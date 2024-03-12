@@ -17,7 +17,6 @@ def main():
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.connect((serverIP, int(serverPort)))
             print("{} running on {}".format(clientName, clientIP))
-            INITIALIZE()
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
             sys.exit(0)
@@ -133,6 +132,8 @@ def main():
     clientPort = args.port
     serverIP, serverPort = (args.server).split(":")
     clientIP = '127.0.0.1'
+
+    INITIALIZE()
 
 
 # end main()
