@@ -61,7 +61,7 @@ def main():
                     # TODO: somehow parse bridgeData string to get peer's info
                     clientSocket.close()
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
-                    clientSocket.connect((serverIP, int(serverPort)))
+                    clientSocket.connect(('127.0.0.1', int(serverPort)))
                     CHAT()
                 # quit
                 elif userInput == "/quit":
