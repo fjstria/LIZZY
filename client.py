@@ -78,6 +78,8 @@ def main():
         """
         print("*** STATE: WAIT ***")
         try:
+            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            clientSocket.bind((clientIP, int(clientPort)))
             clientSocket.listen()   # stop-and-wait function, returns when connection received
             print("are we listening???")
             connection, address = clientSocket.accept()
