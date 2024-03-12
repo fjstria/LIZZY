@@ -79,6 +79,8 @@ def main():
         print("*** STATE: WAIT ***")
         try:
             clientSocket.listen()   # stop-and-wait function, returns when connection received
+            connection, address = clientSocket.accept()
+            print("Connection established with", address)
             CHAT()
             return
         except KeyboardInterrupt:
