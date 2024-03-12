@@ -17,6 +17,7 @@ def main():
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.connect((serverIP, int(serverPort)))
             print("{} running on {}".format(clientName, clientIP))
+            clientSocket.send("READY_FOR_CHAT".encode())
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
             sys.exit(0)
