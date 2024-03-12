@@ -79,6 +79,7 @@ def main():
         print("*** STATE: WAIT ***")
         try:
             clientSocket.listen()   # stop-and-wait function, returns when connection received
+            print("are we listening???")
             connection, address = clientSocket.accept()
             print("Connection established with", address)
             CHAT(connection)
@@ -86,8 +87,8 @@ def main():
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
-        except:
-            print("Error: Connection failed.\n", file=sys.stderr)
+        except Exception as e:
+            print("Error:", e, file=sys.stderr)
             TERMINATE()
     # end WAIT()!
     
