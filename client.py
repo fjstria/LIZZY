@@ -93,7 +93,7 @@ def main():
             print("are we listening???")
             connection, address = clientSocket.accept()
             print("Connection established with", address)
-            clientSocket.close()
+            #clientSocket.close()
             CHAT()
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
