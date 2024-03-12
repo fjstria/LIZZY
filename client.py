@@ -53,8 +53,6 @@ def main():
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
                     print("Response from server:",bridgeData)
-                    WAIT()
-                    return
                     if bridgeData == "BRIDGEACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n".format('', '', ''):
                         WAIT()
                     #end if
