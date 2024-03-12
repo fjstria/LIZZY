@@ -1,10 +1,10 @@
 # Chat App
 ## Testing
-Before running the server the file must have execute permissions – enter `chmod +x server.out`.
+Before running the server, the file must have execute permissions – enter `chmod +x server.out`.
 
-`./server.out --port=<server_port> [--debug]` runs the server.
+`./server.out --port=<server_port>` runs the server.
 
-To start the client program, enter `python3 client.py --id=<client_name> --port=<client_port> --server=<server_ip:server_port>`.
+To start a client program, enter `python3 client.py --id=<client_name> --port=<client_port> --server=<server_ip:server_port>`.
 
 ## References
 Command Line Argument Parsing:
