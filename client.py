@@ -113,6 +113,9 @@ def main():
             clientSocket.bind((clientIP, int(clientPort)))
             clientSocket.listen()   # stop-and-wait function, returns when connection received
             clientSocket.accept()
+            while True:
+                userInput = input(">")
+                chatMessage = "CHAT\r\nclientID: {}\r\nMessage: {}\r\n\r\n".format(clientName, userInput)
             #print("Connection established with", address)
             #clientSocket.close()
         except KeyboardInterrupt:
