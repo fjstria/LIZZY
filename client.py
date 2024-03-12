@@ -74,7 +74,7 @@ def main():
         except:
             print("Error: Connection failed.\n", file=sys.stderr)
             TERMINATE()
-    # end WAIT()
+    # end WAIT()!
     
     def CHAT():
         global clientSocket
