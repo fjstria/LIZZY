@@ -17,7 +17,6 @@ def main():
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.connect((serverIP, int(serverPort)))
             print("{} running on {}".format(clientName, clientIP))
-            #clientSocket.send("READY_FOR_CHAT".encode())
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
             sys.exit(0)
@@ -27,9 +26,9 @@ def main():
         # end try-except
 
         # get client input for next action
-        print("*** STATE: INITIALIZE ***")
         try:
             while True:
+                bridgeData = ''
                 userInput = input(">")
                 # id
                 if userInput == "/id":
@@ -52,13 +51,14 @@ def main():
                     bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
-                    print("Response from server:",bridgeData)
+                    print("Response from server:\n",bridgeData)
                     if "clientID: \r\nIP: \r\nPort: \r\n" in bridgeData:
                         WAIT()
                     #end if
                 #chat      
                 elif userInput == "/chat":
-                    # TODO: somehow parse bridgeData string to get peer's info
+                    peerData = bridgeData.split()
+                    print(peerData)
                     clientSocket.close()
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
                     clientSocket.connect(('127.0.0.1', int(serverPort)))
@@ -85,7 +85,6 @@ def main():
         """
         Pauses client input while awaiting second client connection.
         """
-        print("*** STATE: WAIT ***")
         try:
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.bind((clientIP, int(clientPort)))
@@ -109,7 +108,6 @@ def main():
         """
         Operates chat activity between both clients. 
         """
-        print("*** STATE: CHAT ***")
         try:
             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             clientSocket.bind((clientIP, int(clientPort)))
@@ -117,7 +115,6 @@ def main():
             clientSocket.accept()
             #print("Connection established with", address)
             #clientSocket.close()
-            CHAT()
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
@@ -130,7 +127,6 @@ def main():
         """
         Terminates the client program.
         """
-        print("*** STATE: TERMINATE ***")
         clientSocket.close()
         sys.exit(0)
     # end TERMINATE()
