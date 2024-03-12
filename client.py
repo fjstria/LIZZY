@@ -111,18 +111,18 @@ def main():
         """
         print("*** STATE: CHAT ***")
         try:
-            while True:
-                message = input("Enter message: ")
-                if message == "/quit":
-                    clientSocket.send(message.encode())
-                    break  
-                else:
-                    clientSocket.send(message.encode())
+            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            clientSocket.bind((clientIP, int(clientPort)))
+            clientSocket.listen()   # stop-and-wait function, returns when connection received
+            clientSocket.accept()
+            #print("Connection established with", address)
+            #clientSocket.close()
+            CHAT()
         except KeyboardInterrupt:
             print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
-        except:
-            print("Error: Connection failed.\n", file=sys.stderr)
+        except Exception as e:
+            print("Error:", e, file=sys.stderr)
             TERMINATE()
 
     def TERMINATE():
