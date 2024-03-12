@@ -18,10 +18,10 @@ def main():
             clientSocket.connect((serverIP, int(serverPort)))
             print("{} running on {}".format(clientName, clientIP))
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
+            #print("Error: Client interrupt caught. Ending program.\n", file=sys.stderr)
             sys.exit(0)
         except:
-            print("Error: Connection not established. Ending program.\n", file=sys.stderr)
+            #print("Error: Connection not established. Ending program.\n", file=sys.stderr)
             sys.exit(1)
         # end try-except
 
@@ -32,7 +32,7 @@ def main():
                 userInput = input(">")
                 # id
                 if userInput == "/id":
-                    print("User ID:", clientName)
+                    print("ID:", clientName)
                 # register
                 elif userInput == "/register":
                     registerRequest = "REGISTER\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort)
@@ -41,7 +41,7 @@ def main():
                     try:
                         assert clientData == ("REGACK\r\nclientID: {}\r\nIP: {}\r\nPort: {}\r\n\r\n".format(clientName, clientIP, clientPort))
                     except:
-                        print("Error: Invalid REGACK.\n", file=sys.stderr)
+                        #print("Error: Invalid REGACK.\n", file=sys.stderr)
                         TERMINATE()
                     clientSocket.close()  # close the socket after registration
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # reopen socket
@@ -51,7 +51,7 @@ def main():
                     bridgeRequest = "BRIDGE\r\nclientID: {}\r\n\r\n".format(clientName)
                     clientSocket.send(bridgeRequest.encode())
                     bridgeData = (clientSocket.recv(4096)).decode()
-                    print("Response from server:\n",bridgeData)
+                    #print("Response from server:\n",bridgeData)
                     if "clientID: \r\nIP: \r\nPort: \r\n" in bridgeData:
                         WAIT()
                     #end if
@@ -72,10 +72,10 @@ def main():
                 # end if
             # end while
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
+            #print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except:
-            print("Error: Connection failed.\n", file=sys.stderr)
+            #print("Error: Connection failed.\n", file=sys.stderr)
             TERMINATE()
         # end try-except
     # end INITIALIZE()
@@ -96,12 +96,12 @@ def main():
             clientSocket.connect(address)
             CHAT()
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
+            #print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except Exception as e:
-            print("Error:", e, file=sys.stderr)
+            #print("Error:", e, file=sys.stderr)
             TERMINATE()
-    # end WAIT()!
+    # end WAIT()
     
     def CHAT():
         global clientSocket
@@ -116,10 +116,10 @@ def main():
             #print("Connection established with", address)
             #clientSocket.close()
         except KeyboardInterrupt:
-            print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
+            #print("Error: Client interrupt caught. Closing connection.\n", file=sys.stderr)
             TERMINATE()
         except Exception as e:
-            print("Error:", e, file=sys.stderr)
+            #print("Error:", e, file=sys.stderr)
             TERMINATE()
 
     def TERMINATE():
@@ -145,8 +145,6 @@ def main():
     clientIP = '127.0.0.1'
 
     INITIALIZE()
-
-
 # end main()
 
 if __name__ == "__main__":
